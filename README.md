@@ -1,2 +1,3 @@
-# Client
-클라이언트_발달장애인 대기자 지원 프로그램
+Sakai is an application template for Vue based on the [create-vue](https://github.com/vuejs/create-vue), the recommended way to start a Vite-powered Vue projects.
+
+Visit the [documentation](https://sakai.primevue.org/documentation) to get started.
