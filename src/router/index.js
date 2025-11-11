@@ -85,8 +85,8 @@ const routes = [
           name: 'syshome',
           component: () => import('@/components/SysMain.vue'),
         },
-      ],
-    },
+  
+  
     {
       path: '/landing',
       name: 'landing',
@@ -112,7 +112,21 @@ const routes = [
       name: 'error',
       component: () => import('@/views/pages/auth/Error.vue'),
     },
-  ],
+  
+
+// 2. Spread 연산자(...)를 사용해 두 배열을 하나의 'routes' 배열로 합칩니다.
+  ...systemRouter.routes,
+  ...mainRouter,
+  // 나중에 경로 파일을 더 만들어도 여기에 계속 추가하면 됩니다.
+  // ...adminRoutes,
+  // ...userRoutes,
+
+  ];
+
+// 3. 합쳐진 'routes'를 사용해 *하나의* 라우터 인스턴스를 생성합니다.
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes, // 합쳐진 경로 배열을 사용
 });
 
 router.beforeEach((to, from, next) => {
@@ -145,23 +159,6 @@ router.beforeEach((to, from, next) => {
 
   // 3. meta 설정이 없는 경우 (기본)
   return next();
-});
-
-
-// 2. Spread 연산자(...)를 사용해 두 배열을 하나의 'routes' 배열로 합칩니다.
-//const routes = [
-  ...systemRouter.routes,
-  ...mainRouter,
-  // 나중에 경로 파일을 더 만들어도 여기에 계속 추가하면 됩니다.
-  // ...adminRoutes,
-  // ...userRoutes,
-];
-
-
-// 3. 합쳐진 'routes'를 사용해 *하나의* 라우터 인스턴스를 생성합니다.
-const router = createRouter({
-  history: createWebHistory(),
-  routes: routes, // 합쳐진 경로 배열을 사용
 });
 
 // 4. 이 통합 라우터를 export 합니다.
