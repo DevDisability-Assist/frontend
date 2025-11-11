@@ -112,6 +112,16 @@ const router = createRouter({
           name: 'documentation',
           component: () => import('@/views/pages/Documentation.vue'),
         },
+        {
+          path: '/home',
+          name: 'userhome',
+          component: () => import('@/components/AppMain.vue'),
+        },
+        {
+          path: '/syshome',
+          name: 'syshome',
+          component: () => import('@/components/SysMain.vue'),
+        },
       ],
     },
     {
