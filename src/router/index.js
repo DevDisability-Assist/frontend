@@ -112,6 +112,11 @@ const router = createRouter({
           name: 'documentation',
           component: () => import('@/views/pages/Documentation.vue'),
         },
+        {
+          path: '/uikit/survey',
+          name: 'survey',
+          component: () => import('@/views/uikit/Survey.vue'),
+        },
       ],
     },
     {
