@@ -8,19 +8,19 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    optimizeDeps: {
-        noDiscovery: true
+  optimizeDeps: {
+    noDiscovery: true,
+  },
+  plugins: [
+    vue(),
+    tailwindcss(),
+    Components({
+      resolvers: [PrimeVueResolver()],
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
-    plugins: [
-        vue(),
-        tailwindcss(),
-        Components({
-            resolvers: [PrimeVueResolver()]
-        })
-    ],
-    resolve: {
-        alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    }
+  },
 });
