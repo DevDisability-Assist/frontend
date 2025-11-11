@@ -1,54 +1,12 @@
-import AppLayout from '@/layout/AppLayout.vue';
+// router/index.js
+
 import { createRouter, createWebHistory } from 'vue-router';
 
-const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: AppLayout,
-      children: [
-        {
-          path: '/',
-          name: 'dashboard',
-          component: () => import('@/views/Dashboard.vue'),
-        },
-        {
-          path: '/uikit/formlayout',
-          name: 'formlayout',
-          component: () => import('@/views/uikit/FormLayout.vue'),
-        },
-        {
-          path: '/uikit/input',
-          name: 'input',
-          component: () => import('@/views/uikit/InputDoc.vue'),
-        },
-        {
-          path: '/uikit/button',
-          name: 'button',
-          component: () => import('@/views/uikit/ButtonDoc.vue'),
-        },
-        {
-          path: '/uikit/table',
-          name: 'table',
-          component: () => import('@/views/uikit/TableDoc.vue'),
-        },
-        {
-          path: '/uikit/list',
-          name: 'list',
-          component: () => import('@/views/uikit/ListDoc.vue'),
-        },
-        {
-          path: '/uikit/tree',
-          name: 'tree',
-          component: () => import('@/views/uikit/TreeDoc.vue'),
-        },
-        {
-          path: '/uikit/panel',
-          name: 'panel',
-          component: () => import('@/views/uikit/PanelsDoc.vue'),
-        },
+// 1. 분리된 모든 경로 파일(지도 조각)들을 import 합니다.
+import systemRouter from './system_router.js';
+import mainRouter from './main_router.js';
 
+const routes = [
         {
           path: '/uikit/overlay',
           name: 'overlay',
@@ -135,22 +93,21 @@ const router = createRouter({
       component: () => import('@/views/pages/NotFound.vue'),
     },
 
-    {
-      path: '/auth/login',
-      name: 'login',
-      component: () => import('@/views/pages/auth/Login.vue'),
-    },
-    {
-      path: '/auth/access',
-      name: 'accessDenied',
-      component: () => import('@/views/pages/auth/Access.vue'),
-    },
-    {
-      path: '/auth/error',
-      name: 'error',
-      component: () => import('@/views/pages/auth/Error.vue'),
-    },
-  ],
+// 2. Spread 연산자(...)를 사용해 두 배열을 하나의 'routes' 배열로 합칩니다.
+//const routes = [
+  ...systemRouter.routes,
+  ...mainRouter,
+  // 나중에 경로 파일을 더 만들어도 여기에 계속 추가하면 됩니다.
+  // ...adminRoutes,
+  // ...userRoutes,
+];
+
+
+// 3. 합쳐진 'routes'를 사용해 *하나의* 라우터 인스턴스를 생성합니다.
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes, // 합쳐진 경로 배열을 사용
 });
 
+// 4. 이 통합 라우터를 export 합니다.
 export default router;
