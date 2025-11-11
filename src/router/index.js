@@ -1,6 +1,7 @@
 // router/index.js
 
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '@/stores/authStore';
 
 // 1. 분리된 모든 경로 파일(지도 조각)들을 import 합니다.
 import systemRouter from './system_router.js';
@@ -71,6 +72,10 @@ const routes = [
           component: () => import('@/views/pages/Documentation.vue'),
         },
         {
+          path: '/login',
+          name: 'login',
+          component: () => import('@/views/pages/Login.vue'),
+          meta: { requiresAuth: false }, // 인증X
           path: '/home',
           name: 'userhome',
           component: () => import('@/components/AppMain.vue'),
@@ -92,6 +97,56 @@ const routes = [
       name: 'notfound',
       component: () => import('@/views/pages/NotFound.vue'),
     },
+    // {
+    //   path: '/auth/login',
+    //   name: 'login',
+    //   component: () => import('@/views/pages/auth/Login.vue'),
+    // },
+    {
+      path: '/auth/access',
+      name: 'accessDenied',
+      component: () => import('@/views/pages/auth/Access.vue'),
+    },
+    {
+      path: '/auth/error',
+      name: 'error',
+      component: () => import('@/views/pages/auth/Error.vue'),
+    },
+  ],
+});
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  const isAuthenticated = authStore.accessToken; // 토큰 존재 여부
+  const userRole = authStore.userRole;
+
+  // 1. 인증이 필요한 페이지
+  if (to.meta.requiresAuth) {
+    if (!isAuthenticated) {
+      // 1a. 인증 안됨 -> 로그인 페이지로
+      return next({ name: 'login', query: { redirect: to.fullPath } });
+    }
+    // 1b. 역할(Role) 체크
+    if (to.meta.role && to.meta.role !== userRole) {
+      return next({ name: 'accessDenied' }); // 권한 없음
+    }
+    return next();
+  }
+
+  // 2. 인증이 필요 없는 페이지 (e.g., 로그인)
+  if (to.meta.requiresAuth === false) {
+    if (isAuthenticated) {
+      // 2a. 이미 로그인한 사용자가 로그인 페이지 접근 시 -> 홈으로
+      return next({ name: 'dashboard' });
+    }
+    return next();
+  }
+
+  // 3. meta 설정이 없는 경우 (기본)
+  return next();
+});
+
 
 // 2. Spread 연산자(...)를 사용해 두 배열을 하나의 'routes' 배열로 합칩니다.
 //const routes = [
