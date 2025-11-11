@@ -7,7 +7,11 @@ import StatsWidget from '@/components/dashboard/StatsWidget.vue';
 </script>
 
 <template>
+  <<<<<<< HEAD
   <!-- <div class="grid grid-cols-12 gap-8">
+=======
+  <div class="grid grid-cols-12 gap-8">
+>>>>>>> main
     <StatsWidget />
 
     <div class="col-span-12 xl:col-span-6">
@@ -18,8 +22,10 @@ import StatsWidget from '@/components/dashboard/StatsWidget.vue';
       <RevenueStreamWidget />
       <NotificationsWidget />
     </div>
+<<<<<<< HEAD
   </div> -->
   <div class="grid grid-cols-12 gap-8">
     <StatsWidget></StatsWidget>
+    ======= >>>>>>> main
   </div>
 </template>
