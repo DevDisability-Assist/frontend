@@ -14,25 +14,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="card">
-    <div class="font-semibold text-xl">Tree</div>
-    <Tree
-      :value="treeValue"
-      selectionMode="checkbox"
-      v-model:selectionKeys="selectedTreeValue"
-    ></Tree>
-  </div>
-
-  <div class="card">
-    <div class="font-semibold text-xl mb-4">TreeTable</div>
-    <TreeTable
-      :value="treeTableValue"
-      selectionMode="checkbox"
-      v-model:selectionKeys="selectedTreeTableValue"
-    >
-      <Column field="name" header="Name" :expander="true"></Column>
-      <Column field="size" header="Size"></Column>
-      <Column field="type" header="Type"></Column>
-    </TreeTable>
+  <div class="surveyContainer">
+    <h1>조사지 등록</h1>
+    <label for="#">조사지기본정보</label>
   </div>
 </template>
